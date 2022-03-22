@@ -61,7 +61,7 @@
             $('form').submit(function () {
                 const name    = $('input[name="name"]').val();
                 const udetate = $('input[name="udetate"]').val();
-                const msg = `>${name}\n${udetate}`;
+                const msg = `> Ajouter un nouvel élément:\n${name}\n${udetate}`;
                 sendText(msg);
                 return false;
             });
