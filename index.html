@@ -1,105 +1,78 @@
 <html>
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WG8D52PMVF"></script>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add an item to the spreadsheet</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+</head>
+<body>
+
+    <form class="w-75 mx-auto">
+        <p class="mt-3">Saisissez un mot, une expression ou une phrase en français.</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="name" placeholder="" required>
+        </div>
+        <p class="mt-3">Traduction d'entrée pour cela.</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="udetate" required>
+        </div>
+        <p class="mt-3">Donnez-moi des exemples pour utiliser ce mot.</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="examples">
+        </div>
+        <input type="submit" class="mt-4 btn btn-primary" value="Send">
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-WG8D52PMVF');
+
+        $(document).ready(function () {
+            const liffId = "1656994995-mPoRyOJl";
+            initializeLiff(liffId);
+        })
+
+        function initializeLiff(liffId) {
+            liff.init({
+                liffId: liffId
+            }).then(() => {
+                initializeApp();
+            }).catch((err) => {
+                console.log('LIFF Initialization failed ', err);
+            });
+        }
+
+        function sendText(text) {
+            liff.sendMessages([{
+                'type': 'text',
+                'text': text
+            }]).then(function () {
+                liff.closeWindow();
+            }).catch(function (error) {
+                window.alert('Failed to send message ' + error);
+            });
+        }
+
+        const params = (new URL(document.location)).searchParams;
+        const key = params.get('key');
+
+        $(function () {
+            $('form').submit(function () {
+                const name    = $('input[name="name"]').val();
+                const udetate = $('input[name="udetate"]').val();
+                const examples = $('input[name="examples"]').val();
+                const msg = `> Ajouter un nouvel élément:\n${name}\n${udetate}\n${examples}`;
+                sendText(msg);
+                return false;
+            });
+        });
+
     </script>
 
-    <!-- meta -->
-    <meta charset="utf-8">
-    <meta name="keywords" content="HiroyaMorimoto,Hiroya,Morimoto,森本博也,Design Lab,公式サイト,オフィシャルサイト">
-    <meta name="description" content="Hiroya Morimoto was a cybersecurity strategy consultant as a manager designated for the cybersecurity and defense affairs at the Strategic Impact Unit, EY Japan. Also belonging to the Center for Rule-making Strategies (CRS) as a visiting fellow.">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet">
-    <style>
-      body{
-	  font-family: 'Marcellus', 'Noto Serif JP', serif;
-	  color: #595f63;
-	  text-align:center;
-      }
-      .link_list{
-	  font-size:16px;
-	  line-height:30px;
-	  padding-left: 1em;
-      }
-      #base-main{
-	  background-color:#FFFF1F;
-      }
-      #main{
-	  margin-left:auto;
-	  margin-right:auto;
-	  text-align:left;
-	  width:650px;
-      }
-      .global-header {
-	  position:absolute; top: 10; width: 60%; height: 100px; z-index: 1000;
-      }
-      .global-header__logo {
-	  display: block; color: #695f63; font-size: 20px; font-size: 2rem; line-height: 1; letter-spacing: 0.12em;
-	  font-weight: 400;
-      }
-      .global-header__nav {
-	  text-align: right;
-      }
-      .main_content {
-	  position:relative;
-	  margin-top:100px;
-	  display: block;
-	  background-color: #FFF;
-      }
-      .link_deco_none {
-	  text-decoration: none;
-	  color: #;
-      }
-    </style>
-    
-    <title>Hiroya Morimoto | Designer / Management consultant</title>
-  </head>
-
-  <body>
-    <div id="base_main">
-      <div id="main">
-
-	<header class="global-header">
-	  <div class="global-header__inner">
-	    <a href="/" class="global-header__logo" style="text-decoration:none;">Hiroya Morimoto</a><br/>
-	    <nav class="global-header__nav">
-              <a href="/" class="link_deco_none">TOP</a>
-<!--              <a href="/#profile" class="link_deco_none">PROFILE</a>
--->
-              <a href="https://www.linkedin.com/in/hiroyamorimoto/" class="link_deco_none">PROFILE</a>
-              <a href="https://forms.gle/uTm5uJoLYycj3n6L8" class="link_deco_none">CONTACT</a>
-	    </nav>
-	  </div>
-	</header>
-
-	<div class="main_content">
-	  <div id="profile">
-	    <h4>My profile</h4>
-	    <div class="link_list">
-	      <a href="https://www.linkedin.com/in/hiroyamorimoto/">LinkedIn</a>
-	    </div>
-	  </div>
-    
-	  <div>
-	    <h4>Interviews</h4>
-	    <div class="link_list">
-<!--	      <a href="https://www.eysc.jp/recruit/si/sector/sis/ges.html">EY Japan recruiting website</a><br/>
--->
-	      	      <a href="https://web.archive.org/web/20210414174459/https://www.eysc.jp/recruit/si/sector/sis/ges.html">EY Japan recruiting website (Archive)</a><br/>
-<!--	      <a href="https://gaishishukatsu.com/company/18277#interview">外資就活ドットコム website</a>
--->
-	      <a href="https://web.archive.org/web/20211011142413/https://gaishishukatsu.com/company/18277#interview">外資就活ドットコム website (Archive)</a>
-	    </div>
-	  </div>
-
-	</div>
-      </div>
-    </div>
-  </body>
+</body>
 </html>
